@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" href="static/dist/css/volta.css">
+    <link rel="icon" type="image/ico" href="static/images/logos/vonage-logo--collapsed.svg">
+     <link rel="stylesheet" href="static/dist/css/volta-templates.css">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0">
+  </head>
+
+  <body class="Vlt-template Vlt-template--sidenav Vlt-template--header">
+
+    <header class="Vlt-header">
+      <div class="main-header__logo">
+        <a href="/" class="Vlt-M-plus">
+          <img width="221" height="47" src="static/images/logos/vonage-logo.svg">
+        </a>
+        <a href="/" class="Vlt-S-only">
+          <img width="40" height="150" align="center" src="static/images/logos/vonage-logo--collapsed.svg">
+        </a>
+      </div>
+      <!-- ------------- AVATAR -------------- -->
+      {% if user %}
+
+        <div class="Vlt-dropdown">
+          <div class="Vlt-dropdown__trigger Vlt-dropdown__trigger--btn" >
+              <button class="Vlt-btn Vlt-btn--secondary">{{ user }}&emsp;</button>
+          </div>
+          <div class="Vlt-dropdown__panel Vlt-dropdown__panel--left">
+            <div class="Vlt-dropdown__panel__content">
+
+                <div class="Vlt-dropdown__title">{{ user }}</div>
+
+                <div class="Vlt-dropdown__link Vlt-title--icon" align="center">
+                    <a href="/logout" class="Vlt-text-link">Logout</a>
+                    <svg class="Vlt-icon--small Vlt-grey">
+                        <use xlink:href="static/images/icons/Vlt-icon-quit.svg#Vlt-icon-quit"/>
+                    </svg>
+                </div>
+
+
+            </div>
+          </div>
+        </div>
+
+      {% endif %}
+
+      <!-- ----------------------------------- -->
+    </header>
+
+    <aside class="Vlt-sidenav Vlt-sidenav--light" id="Vlt-sidenav">
+		<!-- Fixed blocks (optional) -->
+
+		<!-- Top tabs (optional) -->
+		<div class="Vlt-sidenav__scroll">
+            <div class="Vlt-sidemenu Vlt-sidemenu--rounded">
+
+                {% if registered_data %}
+
+                    <h5><b>Provisioned Number List:</b></h5>
+
+                    {% for number in registered_data %}
+
+                        <li>
+                            <a button class="Vlt-modal-trigger Vlt-sidemenu__link" data-modal="modal_{{number['number']}}">{{ number['number'] }}</button>
+
+                                <div id="modal_{{number['number']}}" class="Vlt-modal">
+                                    <div class="Vlt-modal__panel">
+                                        <div class="Vlt-modal__header">
+                                            <h4>{{ number['number'] }}</h4>
+                                            <div class="Vlt-modal__dismiss"></div>
+                                        </div>
+                                        <div class="Vlt-modal__content">
+                                            <div class="Vlt-table">
+	                                            <table>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td>Email:</td>
+                                                            <td>{{ number.get('calendar') }}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Calendar:</td>
+                                                            <td>{{ number.get('calendar_name') }}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Call Forward Destination:</td>
+                                                            <td>{{ number.get('destination') }}</td>
+                                                        </tr>
+
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                        <div class="Vlt-modal__footer">
+
+                                            <button class="Vlt-btn Vlt-btn--app Vlt-btn--secondary Vlt-modal__confirm">Ok</button>
+                                            <button class="Vlt-btn Vlt-btn--destructive" type="button" id="delete_number" onclick="delete_number({{ number['number'] }})">Delete</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </li>
+
+
+
+                    {% endfor %}
+                {% endif %}
+
+
+            </div>
+        </div>
+		<!-- Bottom tabs (optional) -->
+		<!-- Fixed blocks (optional) -->
+	</aside>
+
+    <main class="Vlt-main Vlt-main--light">
+      <header class="Vlt-sidenav__mobile Vlt-sidenav__mobile--light">
+			<button id="Vlt-sidenav-mobile-trigger">
+				<svg class="Vlt-sidenav__collapse__close">
+		        	<use xlink:href="static/dist/symbol/volta-icons.svg#Vlt-icon-menu"></use>
+		        </svg>
+			</button>
+		</header>
+      {% include 'includes/_popup_msg.html' %}
+
+      <div class="Vlt-card Vlt-article">
+        <h3><center>{{ title }}</center></h3>
+        {% block content %}{% endblock %}
+      </div>
+
+    </main>
+
+
+  <script src="static/dist/js/volta.js"></script>
+  <script src="static/js/svgxuse.min.js"></script>
+
+  <script type="text/javascript" src="static/js/popper.min.js"></script>
+  <script type="text/javascript" src="static/js/tooltip.min.js"></script>
+
+  <script type="text/javascript">
+      Volta.init(['menu', 'menuCollapse', 'dropdown', 'modal']);
+      Volta.flash.show('flash-callMessage', '4000');
+  </script>
+  <script type="text/javascript" src="https://code.jquery.com/jquery-1.9.1.js"></script>
+
+    <script>
+        function delete_number(number) {
+            location.href = '{{answer_url}}/delete_number?number=' + number;
+        }
+    </script>
+
+  </body>
+</html>

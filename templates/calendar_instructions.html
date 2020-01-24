@@ -1,0 +1,49 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<div class="Vlt-col">
+
+    <form method="POST" action="" >
+        <!--==================================================================================-->
+        <div class="Vlt-card">
+
+            <div class="Vlt-card__header">
+                <h3 class="Vlt-title--icon">Smart Number Provisioning completed for {{ smart_number }}</h3>
+            </div>
+            <div class="Vlt-card__content">
+
+
+                <div class="Vlt-grid">
+
+                    <!-- Left Column -->
+
+                  <div class="Vlt-col">
+
+                      <!--Calendar selection-->
+
+                    <div>
+                      <p>You have succesfuly provisioned Smart Number {{ smart_number }} and connected it with {{ calendar_name }} Google Calendar</p>
+                        <p> Next step is to add your Google Calendar Event to {{ calendar_name }}. Events Title <b>MUST START</b> with extension or the phone number followed by space.The rest of the text is ignored. Make sure to select the right calendar for the event at the bottom of your event window!
+                    </div>
+                  <img src="static/images/google_calendar_exl.png" alt="Example">
+                  </div>
+                    <!-- Right Column -->
+                  <!--<div class="Vlt-col">-->
+                  <!--</div>-->
+                </div>
+            </div>
+        </div>
+
+        <div class="Vlt-form__element Vlt-form__element--big">
+            <button class="Vlt-btn Vlt-btn--primary Vlt-btn--app" type="Submit">Done</button>
+        </div>
+
+
+    </form>
+
+    </div>
+
+
+
+{% endblock %}

@@ -1,0 +1,77 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<app ng-version="0.0.1"><!---->
+
+
+    <div class="Vlt-main align-center">
+
+
+        <div class="align-center Vlt-main__content Vlt-card">
+            <h2>Sign in to Call Scheduler</h2>
+            <!---->
+            <p>Enter your Vonage Admin Username and Password</p>
+            <form class="login-form ng-untouched ng-valid ng-dirty" method="POST" name="loginForm" novalidate="" role="form">
+                {{ form.csrf_token }}
+                <div class="Vlt-form__element Vlt-form__element--big">
+                    <div class="Vlt-input">
+
+                        {{ form.username.label }} {{ form.username(size=20) }}
+                        <!--<label for="username">Username</label>-->
+                    </div>
+                </div>
+
+                <div class="Vlt-form__element Vlt-form__element--big">
+                    <div class="Vlt-composite Vlt-composite--appendedicon">
+                        <div class="Vlt-input">
+
+                            <!--<label>Password</label>-->
+                            {{ form.password.label }} {{ form.password(size=20) }}
+                        </div>
+                        <button class="Vlt-composite__append Vlt-composite__append--icon Vlt-text-btn" type="button">
+                            <!---->
+                            <!---->
+                            <vg-icon icon="eye">
+                                <svg class="Vlt-icon Vlt-icon-eye">
+                                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="static/images/icons/Vlt-icon-eye.svg#Vlt-icon-eye">
+
+                                    </use>
+                                </svg>
+                            </vg-icon>
+                        </button>
+                    </div>
+                </div>
+                <!---->
+                <button class="Vlt-btn Vlt-btn--primary Vlt-btn--block Vlt-btn--large Vlt-btn--app" id="submitBtn" type="submit">
+                    <!---->
+                    <!---->
+                    <span>Sign In</span>
+                </button>
+                <div class="Vlt-form__element align-center">
+                    <vlt-checkbox name="checkbox1" class="ng-untouched ng-pristine ng-valid">
+                        <div class="Vlt-checkbox">
+                            <label for="remember_me">
+
+                                <span class="Vlt-checkbox__button">
+
+                                    {{ form.remember_me }}
+                                    <span class="Vlt-checkbox__icon"></span>
+
+                                </span>
+                                Remember me
+                            </label>
+                        </div>
+                    </vlt-checkbox>
+                </div>
+                <!--<div class="Vlt-form__element align-center forgot-pwd-elem">-->
+                    <!--<div class="forgot-password">Forgot your password</div>-->
+                <!--</div>-->
+            </form>
+        </div>
+
+
+    </div>
+
+</app>
+
+{% endblock %}

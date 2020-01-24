@@ -1,0 +1,58 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<div class="Vlt-col">
+
+    <form method="POST" action="" >
+        <!--==================================================================================-->
+        <div class="Vlt-card">
+
+            <div class="Vlt-card__header">
+                <h3 class="Vlt-title--icon">Select Google Calendar for Smart Number {{ smart_number }}</h3>
+            </div>
+            <div class="Vlt-card__content">
+
+
+                <div class="Vlt-grid">
+
+                    <!-- Left Column -->
+
+                  <div class="Vlt-col">
+
+                      <!--Calendar selection-->
+
+                    <div>
+                      {% for calendar in calendar_list %}
+
+                        <div class="Vlt-radio">
+                            <label for={{ calendar['id'] }}>
+                                <span class="Vlt-radio__button">
+                                    <input type="radio" id={{ calendar['id'] }} value={{ calendar['id'] }} name="calendars"/>
+                                    <span class="Vlt-radio__icon"></span>
+                                </span>
+                                {{ calendar['summary'] }}
+                            </label>
+                        </div>
+
+                      {% endfor %}
+                    </div>
+
+
+                  </div>
+                    <!-- Right Column -->
+                  <!--<div class="Vlt-col">-->
+                  <!--</div>-->
+                </div>
+            </div>
+        </div>
+
+        <div class="Vlt-form__element Vlt-form__element--big">
+            <button class="Vlt-btn Vlt-btn--primary Vlt-btn--app" type="Submit">Select Calendar</button>
+        </div>
+
+    </form>
+
+    </div>
+
+{% endblock %}

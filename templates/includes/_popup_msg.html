@@ -1,0 +1,17 @@
+{% with messages = get_flashed_messages() %}
+{% if messages %}
+<div id="flash-callMessage" class="Vlt-callout Vlt-callout--critical Vlt-flash Vlt-flash--small Vlt-flash_visible">
+  <i></i>
+  <div class="Vlt-callout__content">
+
+    <ul>
+        {% for message in messages %}
+        <li>{{ message }}</li>
+        {% endfor %}
+    </ul>
+  </div>
+  <button class="Vlt-callout__dismiss"></button>
+</div>
+</div>
+{% endif %}
+{% endwith %}

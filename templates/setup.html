@@ -1,0 +1,75 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<div class="Vlt-col">
+
+    <form method="POST" action="" >
+        <!--==================================================================================-->
+        {% if not nx_key %}
+
+        <div class="Vlt-callout Vlt-callout--critical">
+          <i></i>
+          <div class="Vlt-callout__content">
+            <p>Nexmo Account API Key not configured. Please add it under Nexmo Account</p>
+          </div>
+        </div>
+
+        {% endif %}
+
+        <div class="Vlt-card">
+
+            <div class="Vlt-card__header">
+                <h3 class="Vlt-title--icon">Configure Your Service</h3>
+            </div>
+            <div class="Vlt-card__content">
+
+                <div class="Vlt-grid">
+
+                    <!-- Left Column -->
+
+                  <div class="Vlt-col">
+
+                      {{ form.csrf_token }}
+
+                      <!--Smart Number-->
+
+                      <div class="Vlt-form__element Vlt-form__element--elastic">
+                          <label for="smart_did" class="Vlt-label">Smart Number DID</label>
+                          <div class="Vlt-input">
+                              {{ form.smart_did }}
+                          </div>
+                        </div>
+                      <!--Nexmo App API Key-->
+
+                      <div class="Vlt-form__element Vlt-form__element--elastic">
+                          <label for="nx_app_id" class="Vlt-label">Nexmo Application ID</label>
+                          <div class="Vlt-input">
+                              {{ form.nx_app_id }}
+                          </div>
+                        </div>
+
+                      <div class="Vlt-form__element Vlt-form__element--elastic">
+                      <label for="destination_ext" class="Vlt-label">Default Destination Extension</label>
+                      <div class="Vlt-input">
+                        {{ form.destination_ext }}
+                      </div>
+                      <small class="Vlt-form__element__hint">Extension or DID to forward the call when schedule is not on</small>
+                    </div>
+
+
+                  </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="Vlt-form__element Vlt-form__element--big">
+            <button class="Vlt-btn Vlt-btn--primary Vlt-btn--app" type="Submit">Submit</button>
+        </div>
+
+    </form>
+
+    </div>
+
+{% endblock %}

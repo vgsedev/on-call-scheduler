@@ -1,0 +1,372 @@
+// The sidenav can collapse only in M-plus
+
+.Vlt-sidenav {
+
+	&__elem {
+		&--collapsed {
+			display: none;
+		}
+
+		&--full {
+			display: inherit;
+		}
+	}
+
+	&__block {
+
+		&--logo {
+			.Vlt-sidenav__collapse {
+				cursor: pointer;
+				flex: 0 0 24px;
+				height: 24px;
+				margin-left: 20px;
+				transition: opacity 0.2s;
+
+				&:hover {
+					opacity: 0.5;
+				}
+
+				svg {
+					height: 24px;
+					width: 24px;
+				}
+
+				.Vlt-sidenav--collapsed & {
+					@media #{$M-plus} {
+						margin-bottom: 10px;
+						margin-left: 0px;
+					}
+				}
+
+				&__close {
+					.Vlt-sidenav--collapsed & {
+						@media #{$M-plus} {
+							display: none;
+						}
+					}
+				}
+
+				&__open {
+					display: none;
+					order: 1;
+
+					.Vlt-sidenav--collapsed & {
+						@media #{$M-plus} {
+							display: block;
+						}
+					}
+				}
+			}
+		}
+	}
+
+	&.Vlt-sidenav--collapsed {
+		@media #{$M-plus} {
+			flex: 0 0 68px;
+			overflow: visible;
+			position: relative;
+			width: 68px;
+			z-index: $z-index-sidenav; //required for tooltips
+
+			.Vlt-sidenav {
+
+				&__elem {
+					&--collapsed {
+						display: inherit;
+					}
+
+					&--full {
+						display: none;
+					}
+				}
+
+				&__block {
+					left: 0;
+					padding: 10px 0;
+					text-align: center;
+					width: 100%;
+
+					&:before,
+					&:after {
+						left: 14px;
+						width: 40px;
+					}
+
+					& + .Vlt-sidenav__block {
+						margin-top: 0;
+					}
+
+					&--link {
+						margin: 5px 0 0;
+						padding: 5px 0 0;
+
+						.Vlt-sidenav__link {
+							border-radius: 4px;
+							display: block;
+							margin: 0 10px;
+							padding: 8px 10px;
+						}
+					}
+
+					&--logo {
+						flex-flow: column;
+						padding: 10px 10px 15px;
+
+						.Vlt-sidenav__collapse {
+							order: 1;
+						}
+
+						.Vlt-sidenav__logo {
+							flex: 0 0 24px;
+							order: 2;
+
+							img,
+							svg {
+								height: 24px;
+								width: 27px;
+							}
+						}
+					}
+				}
+			}
+
+			.Vlt-sidemenu {
+				&.Vlt-sidemenu--rounded {
+					padding: 10px 0;
+				}
+
+				& > li > .Vlt-sidemenu__link,
+				& > li > .Vlt-sidemenu__trigger {
+					align-items: center;
+					border-radius: 4px;
+					display: inline-flex;
+					flex-flow: column;
+					opacity: 1;
+					padding: 8px 10px;
+					position: relative;
+
+					// will only work if parent if position static
+					.Vlt-badge {
+						// Small badge (copied because you can't extend within a mediaquery)
+						font-size: 0.9rem;
+						height: 13px;
+						margin-left: 14px;
+						margin-top: -4px;
+						padding: 2px 6px;
+						position: absolute;
+					}
+
+					svg {
+						height: 22px;
+						margin: 0;
+						opacity: 0.8;
+						width: 22px;
+					}
+
+					&--disabled {
+						cursor: default;
+						pointer-events: none;
+					}
+
+					&:hover {
+						.Vlt-sidemenu__label {
+							display: block;
+						}
+					}
+
+					&_active {
+						svg {
+							opacity: 1;
+						}
+					}
+
+					.Vlt-sidemenu__label {
+						@include tooltip-content;
+						display: none !important; // labels won't work with new design
+						left: 100%;
+						margin-left: 10px;
+						margin-top: -8px;
+						position: absolute;
+						text-align: left;
+						white-space: nowrap;
+						width: auto;
+
+						&:before {
+							border-color: transparent $black transparent transparent;
+							border-style: solid;
+							border-width: 6px 6px 6px 0;
+						    content: '';
+							left: -5px;
+							margin-top: -5px;
+						    position: absolute;
+							top: 50%;
+						}
+					}
+				}
+
+				&__trigger {
+					& + ul {
+						border-radius: 8px;
+						left: 72px;
+						margin-top: -36px;
+						position: absolute;
+						width: 240px;
+						z-index: $z-index-sidenav;
+
+						.Vlt-sidemenu__title {
+							margin-left: 0;
+						}
+
+						.Vlt-sidemenu__link,
+						.Vlt-sidemenu__trigger {
+							border-radius: 0px;
+							justify-content: flex-start;
+							margin-left: 0px;
+							padding-left: 20px;
+							padding-right: 20px;
+
+							&:before,
+							&:after {
+								content: none;
+							}
+
+							svg,
+							span {
+								transform: none !important;
+							}
+						}
+
+						ul {
+							left: 244px;
+							margin-top: -40px;
+						}
+
+						li {
+							margin-left: 0 !important;
+							padding-top: 0;
+
+							&:last-child > .Vlt-sidemenu__link,
+							&:last-child > .Vlt-sidemenu__trigger {
+								margin-bottom: 0;
+							}
+						}
+
+					}
+
+					&_active {
+						& + ul {
+							box-shadow: 0 2px 4px 0 rgba($black, 0.15);
+							overflow: visible;
+						}
+					}
+
+					span {
+						&:after {
+							content: none !important; // hide chevron
+						}
+					}
+				}
+
+				&__title {
+					border-top: 0;
+					height: 1px;
+					margin: 0px auto;
+					overflow: hidden;
+					padding: 0;
+					text-indent: -9999px;
+					width: 40px;
+				}
+			}
+
+			.Vlt-sidetabs {
+				padding: 10px 10px 0;
+
+				ul {
+					display: block;
+					margin-bottom: 10px;
+					max-height: 0;
+					overflow: hidden;
+					top: auto !important;
+				}
+
+				&__label {
+					display: block;
+					flex: 1;
+				}
+
+				.Vlt-js-tabs__link {
+					appearance: none;
+					background: none;
+					border: 0;
+					outline: none;
+					text-align: left;
+					width: 100%;
+				}
+
+				.Vlt-sidemenu__trigger {
+					border-radius: 4px;
+					display: block;
+					margin: 0px 0 10px;
+				}
+
+				.Vlt-tooltip--js {
+					display: none;
+				}
+
+				&--bottom {
+					ul {
+						bottom: 0px;
+					}
+				}
+			}
+
+			// Styling info (same independently from color scheme, hence why it's here)
+
+			.Vlt-sidemenu__trigger + ul {
+				background: $white;
+				padding: 5px 0 8px;
+
+				.Vlt-sidemenu__trigger,
+				.Vlt-sidemenu__link {
+					color: $grey-darker;
+
+					svg {
+						&,
+						&[class*='Vlt-'] {
+							fill: $grey-darker !important;
+						}
+					}
+
+					&:hover,
+					&_active {
+						background: $grey-lighter;
+						color: $black;
+
+						svg {
+							&,
+							&[class*='Vlt-'] {
+								fill: $black !important;
+							}
+						}
+					}
+
+					&--disabled {
+						color: $grey;
+
+						svg {
+							&,
+							&[class*='Vlt-'] {
+								fill: $grey !important;
+							}
+						}
+					}
+				}
+
+				.Vlt-sidemenu__title {
+					border-bottom: 1px solid $grey-light;
+					margin: 5px 0;
+				}
+			}
+		}
+	}
+}

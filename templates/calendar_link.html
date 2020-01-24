@@ -1,0 +1,125 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<div class="Vlt-col">
+    <form method="POST" action="" >
+        <!--==================================================================================-->
+        <div class="Vlt-card">
+
+            <div class="Vlt-card__header">
+                <h3 class="Vlt-title--icon">Link Google Calendar</h3>
+            </div>
+            <div class="Vlt-card__content">
+
+                <div class="Vlt-grid">
+
+                    <!-- Left Column -->
+
+                  <div class="Vlt-col">
+
+                    <div>
+
+                        <p> Smart Number {{ smart_number }}  </p>
+
+                    </div>
+
+                      <!--Google Auth button-->
+
+                      <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js">
+                        </script>
+                      <script src="https://apis.google.com/js/client:platform.js?onload=start" async defer>
+                        </script>
+
+                      <script>
+                        function start() {
+                          gapi.load('auth2', function() {
+                            auth2 = gapi.auth2.init({
+                              client_id: "{{ google_client_id }}",
+                              // Scopes to request in addition to 'profile' and 'email'
+                              scope: 'https://www.googleapis.com/auth/calendar.readonly'
+                            });
+                          });
+                        }
+                      </script>
+
+                      <div class="Vlt-form__element Vlt-form__element--elastic" id="signInGoogleButton">
+                          <label for="signinButton" class="Vlt-label">Authorize Google Calendar</label>
+                          <button type="button" id="signinButton" onclick="googleAuth()">
+                                <img src="static/google_signin_buttons/web/1x/btn_google_signin_dark_normal_web.png"></button>
+                          <small class="Vlt-form__element__hint"> * Use unique calendar for the Call Scheduler Only. Use dedicated account or add dedicated calendar like 'Call Scheduler' to your google 'My Calendars' list</small>
+                      </div>
+
+
+                      <script>
+                          function googleAuth() {
+                            auth2.grantOfflineAccess().then(signInCallback);
+                          };
+                      </script>
+
+                    <script>
+                    function signInCallback(authResult) {
+                      if (authResult['code']) {
+
+                        // Hide the sign-in button now that the user is authorized, for example:
+                        $('#signInGoogleButton').attr('style', 'display: none');
+
+                        // Send the code to the server
+                        $.ajax({
+                          type: 'POST',
+                          // url: 'http://localhost:8000/storeauthcode',
+                          url: '{{answer_url}}/storeauthcode',
+                          // Always include an `X-Requested-With` header in every AJAX request,
+                          // to protect against CSRF attacks.
+                          headers: {
+                            'X-Requested-With': 'XMLHttpRequest'
+                          },
+                          // contentType: 'application/octet-stream; charset=utf-8',
+                          contentType: 'application/json',
+                          success: function(result) {
+                            // Handle or verify the server response.
+                          },
+                          processData: false,
+                          // data: authResult['code'],
+                          data: JSON.stringify({'data': authResult['code'], 'smart_did': {{ smart_number }} }) ,
+
+                        });
+                        $('#google_calendar_authorized').attr('style', 'display: block');
+                        $('#Submit_button').attr('style', 'display: block');
+                      } else {
+                        // There was an error.
+                      }
+                    }
+                    </script>
+
+                    <div id="google_calendar_authorized">
+
+                        <p> Google Calendar Authorized</p>
+
+                    </div>
+
+                    <script>
+                        $('#google_calendar_authorized').attr('style', 'display: none');
+                    </script>
+
+                  </div>
+                    <!-- Right Column -->
+                  <!--<div class="Vlt-col">-->
+                  <!--</div>-->
+                </div>
+            </div>
+        </div>
+
+        <div class="Vlt-form__element Vlt-form__element--big" id="Submit_button">
+            <button class="Vlt-btn Vlt-btn--primary Vlt-btn--app" type="Submit">Calendar Selection</button>
+        </div>
+
+        <script>
+            $('#Submit_button').attr('style', 'display: none');
+        </script>
+
+    </form>
+
+    </div>
+
+{% endblock %}
